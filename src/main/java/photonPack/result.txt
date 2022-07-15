@@ -1,3 +1,0 @@
-Line 2 This line should have an issue!=This line should have a issue
-Line 3 This line could be selected for single paragraph issue!=This line could be selected for signle paragraph issue
-Line 4 Multiple word issue can be found here!=Multiplee wrod issue caan be found here
