@@ -66,4 +66,54 @@ public class CompareDoc {
         }
     }
 
+    public String compare(String filePath1, String filePath2) throws IOException {
+        /*Initializing the docs using poi-ooxml*/
+        XWPFDocument doc1 = new XWPFDocument(new FileInputStream(filePath1));
+        log.info("Loads source/first document(doc1): " + filePath1);
+        XWPFDocument doc2 = new XWPFDocument(new FileInputStream(filePath2));
+        log.info("Loads target/second document(doc2): " + filePath2);
+
+        /*Fething all the paragraphs into a LIST*/
+        List<XWPFParagraph> para1 = doc1.getParagraphs();
+        log.info("Scanning Paragraphs/Lines from source(doc1)");
+        log.info("Total Paragraphs/Lines found in doc1 " + para1.size());
+        List<XWPFParagraph> para2 = doc2.getParagraphs();
+        log.info("Scanning Paragraphs/Lines from target(doc2)");
+        log.info("Total Paragraphs/Lines found in doc2 " + para2.size());
+
+
+        /*max length for iteration */
+        int max = (para1.size() > para2.size()) ? para1.size() : para2.size();
+        String maxLines = (para1.size() > para2.size()) ? "doc1 has maximum " :
+                (para1.size()<para2.size())?"doc2 has maximum":"Both documents has equal";
+        log.info(maxLines+" number of paragraphs/lines -> "+max);
+
+        /*StringBuilder to return the comparison in String*/
+        StringBuilder resultString=new StringBuilder();
+        /*Difference counter*/
+        int diff=0;
+        log.info("Comparing...");
+        for (int i = 0; i < max; i++) {
+            /*fetching the paragraph text from both list elements*/
+            String paraLine1 = para1.get(i).getParagraphText();
+            String paraLine2 = para2.get(i).getParagraphText();
+            /*check paragraph mismatch*/
+            if (!paraLine1.equals(paraLine2)) {
+                /*storing in a Stringbuilder*/
+                resultString.append(String.format("Line %s=>", i + 1));
+                resultString.append(paraLine1 + "!=" + paraLine2);
+                resultString.append("\n");
+
+                /*diff counter*/
+                diff++;
+            }
+        }
+        /*Difference log*/
+        String result=(diff==0)?"No difference between the documents.":
+                (diff>1)?"Found "+diff+" differences.":"Found a difference.";
+        log.info(result);
+
+        return resultString.toString();
+    }
+
 }
