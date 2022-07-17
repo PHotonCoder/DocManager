@@ -1,12 +1,15 @@
 package TestPack;
 
 import actions.CompareDoc;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
 
 public class TestsBasic {
+    private static final Logger log= LogManager.getLogger(TestsBasic.class);
     private CompareDoc comp;
     private String doc1="";
     private String doc2="";
@@ -38,4 +41,21 @@ public class TestsBasic {
         }
     }
 
+    @Test
+    void Test3(){
+        try {
+            log.info(comp.compare(doc1,doc2));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    void Test4(){
+        try {
+            log.info(comp.compare(doc1,doc2));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
